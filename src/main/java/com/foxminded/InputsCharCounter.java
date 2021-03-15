@@ -4,30 +4,30 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class InputCharCounter {
-    private Map<String, Integer> amountOfValues = new TreeMap<String, Integer>();
-    private CacheInputsStorage intputsStorage;
+public class InputsCharCounter {
+    private Map<String, Integer> amountOfSymbols = new TreeMap<String, Integer>();
+    private InputsCacheStorage intputsStorage;
 
-    public InputCharCounter(CacheInputsStorage intputsStorage) {
+    public InputsCharCounter(InputsCacheStorage intputsStorage) {
         this.intputsStorage = intputsStorage;
     }
 
-    public void addInputResultMap(String initialInput) {
-        Map<String, Integer> amountSymbolMap = getAmountSymbolMap(initialInput);
+    public void addInputToCounter(String initialInput) {
+        Map<String, Integer> amountSymbolMap = getSymbolAmountMap(initialInput);
 
         for (Map.Entry<String, Integer> entry : amountSymbolMap.entrySet()) {
-            if (amountOfValues.containsKey(entry.getKey())) {
-                amountOfValues.put(entry.getKey(), amountOfValues.get(entry.getKey()) + entry.getValue());
+            if (amountOfSymbols.containsKey(entry.getKey())) {
+                amountOfSymbols.put(entry.getKey(), amountOfSymbols.get(entry.getKey()) + entry.getValue());
             } else {
-                amountOfValues.put(entry.getKey(), entry.getValue());
+                amountOfSymbols.put(entry.getKey(), entry.getValue());
             }
         }
     }
 
-    private Map<String, Integer> getAmountSymbolMap(String initialInput) {
+    private Map<String, Integer> getSymbolAmountMap(String initialInput) {
         Map<String, Integer> symbolAmountMap;
         if (intputsStorage.isInputExist(initialInput)) {
-            symbolAmountMap = intputsStorage.getValues(initialInput);
+            symbolAmountMap = intputsStorage.getCachedInput(initialInput);
         } else {
             symbolAmountMap = createSymbolAmountMap(initialInput);
             intputsStorage.addToCache(initialInput, symbolAmountMap);
@@ -48,7 +48,7 @@ public class InputCharCounter {
         return symbolAmountMap;
     }
 
-    public Map<String, Integer> getResult() {
-        return amountOfValues;
+    public Map<String, Integer> getAmountOfSymbols() {
+        return amountOfSymbols;
     }
 }
