@@ -1,12 +1,11 @@
 package com.foxminded;
 
-import java.io.IOException;
 import java.util.Map;
 
 public class CharCounterApp {
     private static final InputCacheStorage INPUTS_CACHE_STORAGE = new InputCacheStorage();
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         printSymbolAmount("edcbaa");
         printSymbolAmount("");
         printSymbolAmount("Hello world!");
@@ -14,7 +13,7 @@ public class CharCounterApp {
 
     }
 
-    public static void printSymbolAmount(String input) throws IOException {
+    public static void printSymbolAmount(String input) {
         Map<Character, Long> symbolAmountResult = countSymbols(input);
         if (symbolAmountResult.isEmpty()) {
             System.out.println("There is no characters in the string");
@@ -25,7 +24,7 @@ public class CharCounterApp {
         }
     }
 
-    private static Map<Character, Long> countSymbols(String input) throws IOException {
+    private static Map<Character, Long> countSymbols(String input) {
 
         InputsCharCounter icc = new InputsCharCounter(INPUTS_CACHE_STORAGE);
 
