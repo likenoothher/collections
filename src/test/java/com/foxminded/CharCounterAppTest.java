@@ -35,7 +35,7 @@ public class CharCounterAppTest {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         PrintStream stream = new PrintStream(outputStream);
         System.setOut(stream);
-        CharCounterApp.buildApp(inputString);
+        CharCounterApp.printSymbolAmount(inputString);
         assertEquals(expected, outputStream.toString());
 
     }
@@ -61,7 +61,7 @@ public class CharCounterAppTest {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         PrintStream stream = new PrintStream(outputStream);
         System.setOut(stream);
-        CharCounterApp.buildApp(inputString);
+        CharCounterApp.printSymbolAmount(inputString);
         assertEquals(expected, outputStream.toString());
 
     }

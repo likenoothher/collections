@@ -1,54 +1,64 @@
 package com.foxminded;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
+import gnu.trove.iterator.TCharLongIterator;
+import gnu.trove.map.TCharLongMap;
+import gnu.trove.map.hash.TCharLongHashMap;
+
 
 public class InputsCharCounter {
-    private Map<String, Integer> amountOfSymbols = new TreeMap<String, Integer>();
-    private InputsCacheStorage intputsStorage;
+    private TCharLongMap symbolAmountResult = new TCharLongHashMap();
+    private InputCacheStorage inputStorage;
 
-    public InputsCharCounter(InputsCacheStorage intputsStorage) {
-        this.intputsStorage = intputsStorage;
+    public InputsCharCounter(InputCacheStorage inputStorage) {
+        this.inputStorage = inputStorage;
     }
 
     public void addInputToCounter(String initialInput) {
-        Map<String, Integer> amountSymbolMap = getSymbolAmountMap(initialInput);
+        TCharLongMap amountSymbolMap = getSymbolAmountMap(initialInput);
 
-        for (Map.Entry<String, Integer> entry : amountSymbolMap.entrySet()) {
-            if (amountOfSymbols.containsKey(entry.getKey())) {
-                amountOfSymbols.put(entry.getKey(), amountOfSymbols.get(entry.getKey()) + entry.getValue());
+        for (TCharLongIterator it = amountSymbolMap.iterator(); it.hasNext(); ) {
+            it.advance();
+            if (symbolAmountResult.containsKey(it.key())) {
+                symbolAmountResult.put(it.key(), symbolAmountResult.get(it.key()) + it.value());
             } else {
-                amountOfSymbols.put(entry.getKey(), entry.getValue());
+                symbolAmountResult.put(it.key(), it.value());
             }
         }
     }
 
-    private Map<String, Integer> getSymbolAmountMap(String initialInput) {
-        Map<String, Integer> symbolAmountMap;
-        if (intputsStorage.isInputExist(initialInput)) {
-            symbolAmountMap = intputsStorage.getCachedInput(initialInput);
-        } else {
-            symbolAmountMap = createSymbolAmountMap(initialInput);
-            intputsStorage.addToCache(initialInput, symbolAmountMap);
+    private TCharLongMap getSymbolAmountMap(String initialInput) {
+        if (inputStorage.isInputExist(initialInput)) {
+            return inputStorage.getCachedInput(initialInput);
         }
+        TCharLongMap symbolAmountMap = createSymbolAmountMap(initialInput);
+        inputStorage.addToCache(initialInput, symbolAmountMap);
         return symbolAmountMap;
+
     }
 
-    private Map<String, Integer> createSymbolAmountMap(String initialInput) {
-        Map<String, Integer> symbolAmountMap = new HashMap<String, Integer>();
-        String[] charArray = initialInput.split("");
-        for (String symbol : charArray) {
+    private TCharLongMap createSymbolAmountMap(String initialInput) {
+        TCharLongMap symbolAmountMap = new TCharLongHashMap();
+        if (initialInput.equals("")) {
+            symbolAmountMap.put(Character.MIN_VALUE, 1);
+            return symbolAmountMap;
+        }
+        fillSymbolAmountMap(symbolAmountMap, initialInput);
+        return symbolAmountMap;
+
+    }
+
+    private void fillSymbolAmountMap(TCharLongMap symbolAmountMap, String initialInput) {
+        char[] charArray = initialInput.toCharArray();
+        for (char symbol : charArray) {
             if (symbolAmountMap.containsKey(symbol)) {
                 symbolAmountMap.put(symbol, symbolAmountMap.get(symbol) + 1);
             } else {
                 symbolAmountMap.put(symbol, 1);
             }
         }
-        return symbolAmountMap;
     }
 
-    public Map<String, Integer> getAmountOfSymbols() {
-        return amountOfSymbols;
+    public TCharLongMap getSymbolAmountResult() {
+        return symbolAmountResult;
     }
 }

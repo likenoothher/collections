@@ -1,5 +1,7 @@
 package com.foxminded;
 
+import gnu.trove.map.TCharLongMap;
+import gnu.trove.map.hash.TCharLongHashMap;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -8,22 +10,22 @@ import org.mockito.runners.MockitoJUnitRunner;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-import java.util.HashMap;
-import java.util.Map;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CharCounterTest {
 
-    private Map<String, Integer> mapWithExpectedValues;
+    private TCharLongMap mapWithExpectedValues;
+    private InputsCharCounter inputCharCounter;
 
     @Mock
-    private InputsCacheStorage cache;
+    private InputCacheStorage cache;
 
     @Test
     public void whenGivenEmptyInput_thenResultIsEmptyAmountOne() {
-        InputsCharCounter inputCharCounter = new InputsCharCounter(cache);
-        mapWithExpectedValues = new HashMap<>();
-        mapWithExpectedValues.put("", 1);
+        inputCharCounter = new InputsCharCounter(cache);
+        mapWithExpectedValues = new TCharLongHashMap();
+        
+        mapWithExpectedValues.put(Character.MIN_VALUE, 1);
 
         when(cache.isInputExist("")).thenReturn(false);
 
@@ -31,24 +33,23 @@ public class CharCounterTest {
 
         verify(cache).isInputExist("");
 
-        assertEquals(mapWithExpectedValues, inputCharCounter.getAmountOfSymbols());
+        assertEquals(mapWithExpectedValues, inputCharCounter.getSymbolAmountResult());
 
     }
 
     @Test
     public void whenCacheHasInput_thenCacheClassReturnExistedString() {
+        inputCharCounter = new InputsCharCounter(cache);
+        mapWithExpectedValues = new TCharLongHashMap();
 
-        InputsCharCounter inputCharCounter = new InputsCharCounter(cache);
+        mapWithExpectedValues.put('1', 2);
+        mapWithExpectedValues.put('2', 2);
+        mapWithExpectedValues.put('3', 4);
 
-        mapWithExpectedValues = new HashMap<>();
-        mapWithExpectedValues.put("1", 2);
-        mapWithExpectedValues.put("2", 2);
-        mapWithExpectedValues.put("3", 4);
-
-        Map<String, Integer> mapOf1233Sequence = new HashMap<>();
-        mapOf1233Sequence.put("1", 1);
-        mapOf1233Sequence.put("2", 1);
-        mapOf1233Sequence.put("3", 2);
+        TCharLongMap mapOf1233Sequence = new  TCharLongHashMap();
+        mapOf1233Sequence.put('1', 1);
+        mapOf1233Sequence.put('2', 1);
+        mapOf1233Sequence.put('3', 2);
 
         when(cache.isInputExist("1233")).thenReturn(false).thenReturn(true);
         when(cache.getCachedInput("1233")).thenReturn(mapOf1233Sequence);
@@ -58,25 +59,26 @@ public class CharCounterTest {
         verify(cache, times(2)).isInputExist("1233");
         verify(cache, times(1)).getCachedInput("1233");
 
-        assertEquals(mapWithExpectedValues, inputCharCounter.getAmountOfSymbols());
+        assertEquals(mapWithExpectedValues, inputCharCounter.getSymbolAmountResult());
 
     }
 
     @Test
     public void whenGivenFewInputs_thenCountEntryOfEverySymbol() {
-        InputsCharCounter inputCharCounter = new InputsCharCounter(cache);
-        mapWithExpectedValues = new HashMap<>();
-        mapWithExpectedValues.put("1", 1);
-        mapWithExpectedValues.put("2", 1);
-        mapWithExpectedValues.put("3", 3);
-        mapWithExpectedValues.put("4", 2);
-        mapWithExpectedValues.put("5", 2);
-        mapWithExpectedValues.put("q", 3);
+        inputCharCounter = new InputsCharCounter(cache);
+        mapWithExpectedValues = new TCharLongHashMap();
 
-        Map<String, Integer> mapOf345Sequence = new HashMap<>();
-        mapOf345Sequence.put("3", 1);
-        mapOf345Sequence.put("4", 1);
-        mapOf345Sequence.put("5", 1);
+        mapWithExpectedValues.put('1', 1);
+        mapWithExpectedValues.put('2', 1);
+        mapWithExpectedValues.put('3', 3);
+        mapWithExpectedValues.put('4', 2);
+        mapWithExpectedValues.put('5', 2);
+        mapWithExpectedValues.put('q', 3);
+
+        TCharLongMap mapOf345Sequence = new TCharLongHashMap();
+        mapOf345Sequence.put('3', 1);
+        mapOf345Sequence.put('4', 1);
+        mapOf345Sequence.put('5', 1);
 
         when(cache.isInputExist("123")).thenReturn(false);
         when(cache.isInputExist("345")).thenReturn(false).thenReturn(true);
@@ -93,7 +95,7 @@ public class CharCounterTest {
         verify(cache, times(1)).isInputExist("qqq");
         verify(cache, times(1)).getCachedInput("345");
 
-        assertEquals(mapWithExpectedValues, inputCharCounter.getAmountOfSymbols());
+        assertEquals(mapWithExpectedValues, inputCharCounter.getSymbolAmountResult());
 
     }
 }
