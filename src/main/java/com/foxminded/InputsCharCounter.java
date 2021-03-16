@@ -4,9 +4,12 @@ import gnu.trove.iterator.TCharLongIterator;
 import gnu.trove.map.TCharLongMap;
 import gnu.trove.map.hash.TCharLongHashMap;
 
+import java.util.Map;
+import java.util.TreeMap;
+
 
 public class InputsCharCounter {
-    private TCharLongMap symbolAmountResult = new TCharLongHashMap();
+    private Map<Character, Long> symbolAmountResult = new TreeMap();
     private InputCacheStorage inputStorage;
 
     public InputsCharCounter(InputCacheStorage inputStorage) {
@@ -39,7 +42,6 @@ public class InputsCharCounter {
     private TCharLongMap createSymbolAmountMap(String initialInput) {
         TCharLongMap symbolAmountMap = new TCharLongHashMap();
         if (initialInput.equals("")) {
-            symbolAmountMap.put(Character.MIN_VALUE, 1);
             return symbolAmountMap;
         }
         fillSymbolAmountMap(symbolAmountMap, initialInput);
@@ -58,7 +60,7 @@ public class InputsCharCounter {
         }
     }
 
-    public TCharLongMap getSymbolAmountResult() {
+    public Map<Character, Long> getSymbolAmountResult() {
         return symbolAmountResult;
     }
 }

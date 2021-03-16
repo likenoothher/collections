@@ -7,6 +7,9 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.Map;
+import java.util.TreeMap;
+
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
@@ -14,18 +17,16 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class CharCounterTest {
 
-    private TCharLongMap mapWithExpectedValues;
+    private Map<Character, Long> mapWithExpectedValues;
     private InputsCharCounter inputCharCounter;
 
     @Mock
     private InputCacheStorage cache;
 
     @Test
-    public void whenGivenEmptyInput_thenResultIsEmptyAmountOne() {
+    public void whenGivenEmptyInput_thenResultMapIsEmpty() {
         inputCharCounter = new InputsCharCounter(cache);
-        mapWithExpectedValues = new TCharLongHashMap();
-        
-        mapWithExpectedValues.put(Character.MIN_VALUE, 1);
+        mapWithExpectedValues = new TreeMap();
 
         when(cache.isInputExist("")).thenReturn(false);
 
@@ -38,15 +39,15 @@ public class CharCounterTest {
     }
 
     @Test
-    public void whenCacheHasInput_thenCacheClassReturnExistedString() {
+    public void whenCacheHasInput_thenCacheClassReturnExistedMap() {
         inputCharCounter = new InputsCharCounter(cache);
-        mapWithExpectedValues = new TCharLongHashMap();
+        mapWithExpectedValues = new TreeMap();
 
-        mapWithExpectedValues.put('1', 2);
-        mapWithExpectedValues.put('2', 2);
-        mapWithExpectedValues.put('3', 4);
+        mapWithExpectedValues.put('1', 2l);
+        mapWithExpectedValues.put('2', 2l);
+        mapWithExpectedValues.put('3', 4l);
 
-        TCharLongMap mapOf1233Sequence = new  TCharLongHashMap();
+        TCharLongMap mapOf1233Sequence = new TCharLongHashMap();
         mapOf1233Sequence.put('1', 1);
         mapOf1233Sequence.put('2', 1);
         mapOf1233Sequence.put('3', 2);
@@ -64,16 +65,69 @@ public class CharCounterTest {
     }
 
     @Test
+    public void whenCacheHasEmptyInput_thenCacheClassReturnEmptyMap() {
+        inputCharCounter = new InputsCharCounter(cache);
+        mapWithExpectedValues = new TreeMap();
+
+        TCharLongMap mapOfEmptyInput = new TCharLongHashMap();
+
+        when(cache.isInputExist("")).thenReturn(false).thenReturn(true);
+        when(cache.getCachedInput("")).thenReturn(mapOfEmptyInput);
+        inputCharCounter.addInputToCounter("");
+        inputCharCounter.addInputToCounter("");
+
+        verify(cache, times(2)).isInputExist("");
+        verify(cache, times(1)).getCachedInput("");
+
+        assertEquals(mapWithExpectedValues, inputCharCounter.getSymbolAmountResult());
+
+    }
+
+    @Test
+    public void whenCacheHasNotNotEmptyInput_thenCharCounterCalculateAmountOfSymbols() {
+        inputCharCounter = new InputsCharCounter(cache);
+        mapWithExpectedValues = new TreeMap();
+
+        mapWithExpectedValues.put('1', 2l);
+        mapWithExpectedValues.put('2', 2l);
+        mapWithExpectedValues.put('3', 3l);
+        mapWithExpectedValues.put('a', 1l);
+
+        TCharLongMap mapOf1233Sequence = new TCharLongHashMap();
+        mapOf1233Sequence.put('1', 1);
+        mapOf1233Sequence.put('2', 1);
+        mapOf1233Sequence.put('3', 2);
+
+        TCharLongMap mapOf123aSequence = new TCharLongHashMap();
+        mapOf123aSequence.put('1', 1);
+        mapOf123aSequence.put('2', 1);
+        mapOf123aSequence.put('3', 1);
+        mapOf123aSequence.put('a', 1);
+
+        when(cache.isInputExist("1233")).thenReturn(false);
+        when(cache.isInputExist("123a")).thenReturn(false);
+
+        inputCharCounter.addInputToCounter("1233");
+        inputCharCounter.addInputToCounter("123a");
+
+        verify(cache, times(1)).isInputExist("1233");
+        verify(cache, times(1)).isInputExist("123a");
+
+        assertEquals(mapWithExpectedValues, inputCharCounter.getSymbolAmountResult());
+
+    }
+
+    @Test
     public void whenGivenFewInputs_thenCountEntryOfEverySymbol() {
         inputCharCounter = new InputsCharCounter(cache);
-        mapWithExpectedValues = new TCharLongHashMap();
+        mapWithExpectedValues = new TreeMap();
 
-        mapWithExpectedValues.put('1', 1);
-        mapWithExpectedValues.put('2', 1);
-        mapWithExpectedValues.put('3', 3);
-        mapWithExpectedValues.put('4', 2);
-        mapWithExpectedValues.put('5', 2);
-        mapWithExpectedValues.put('q', 3);
+        mapWithExpectedValues.put('1', 1l);
+        mapWithExpectedValues.put('2', 1l);
+        mapWithExpectedValues.put('3', 3l);
+        mapWithExpectedValues.put('4', 2l);
+        mapWithExpectedValues.put('5', 2l);
+        mapWithExpectedValues.put('q', 3l);
 
         TCharLongMap mapOf345Sequence = new TCharLongHashMap();
         mapOf345Sequence.put('3', 1);

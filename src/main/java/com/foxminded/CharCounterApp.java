@@ -1,42 +1,36 @@
 package com.foxminded;
 
-import gnu.trove.iterator.TCharLongIterator;
-import gnu.trove.map.TCharLongMap;
-
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 public class CharCounterApp {
     private static final InputCacheStorage INPUTS_CACHE_STORAGE = new InputCacheStorage();
 
     public static void main(String[] args) throws IOException {
-        List<String> inputs = new ArrayList<>();
-        inputs.add("Hello world!");
-        inputs.add("Hello world!");
-        inputs.add("21");
-        printSymbolAmount(inputs);
+        printSymbolAmount("edcbaa");
+        printSymbolAmount("");
+        printSymbolAmount("Hello world!");
+        printSymbolAmount("");
 
     }
 
-    public static void printSymbolAmount(List<String> inputs) throws IOException {
-        TCharLongMap symbolAmountResult = countSymbols(inputs);
-        for (TCharLongIterator it = symbolAmountResult.iterator(); it.hasNext(); ) {
-            it.advance();
-            System.out.println(String.format("\"%c\" - %d", it.key(), it.value()));
-
+    public static void printSymbolAmount(String input) throws IOException {
+        Map<Character, Long> symbolAmountResult = countSymbols(input);
+        if (symbolAmountResult.isEmpty()) {
+            System.out.println("There is no characters in the string");
+        } else {
+            for (Map.Entry<Character, Long> entry : symbolAmountResult.entrySet()) {
+                System.out.println(String.format("\"%c\" - %d", entry.getKey(), entry.getValue()));
+            }
         }
     }
 
-    private static TCharLongMap countSymbols(List<String> inputs) throws IOException {
+    private static Map<Character, Long> countSymbols(String input) throws IOException {
 
         InputsCharCounter icc = new InputsCharCounter(INPUTS_CACHE_STORAGE);
 
-        for (String input : inputs) {
-            icc.addInputToCounter(input);
-        }
+        icc.addInputToCounter(input);
+
         return icc.getSymbolAmountResult();
     }
-
-
 }
