@@ -1,5 +1,6 @@
 package com.foxminded;
 
+import gnu.trove.TCollections;
 import gnu.trove.map.TCharLongMap;
 import gnu.trove.map.hash.TCharLongHashMap;
 
@@ -15,7 +16,7 @@ public class UniqueCharsCounter {
         if (charactersAmountCache.contains(input)) {
             return charactersAmountCache.getCachedInput(input);
         }
-        TCharLongMap uniqueCharactersNumber = (calculateNewInput(input));
+        TCharLongMap uniqueCharactersNumber = TCollections.unmodifiableMap(calculateNewInput(input));
         return charactersAmountCache.putToCache(input, uniqueCharactersNumber);
     }
 

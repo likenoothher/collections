@@ -13,7 +13,6 @@ public class CharCounterApp {
 
         printSymbolsAmount(charCounter.calculateCharactersNumber("1233"));
         printSymbolsAmount(charCounter.calculateCharactersNumber(""));
-
         printSymbolsAmount(charCounter.calculateCharactersNumber("122522"));
 
 
@@ -22,7 +21,6 @@ public class CharCounterApp {
     public static void printSymbolsAmount(TCharLongMap result) {
         if (result.isEmpty()) {
             System.out.println("There is no characters in the string");
-            System.out.println(result.getClass().getSimpleName());
             return;
         }
         printSortedResult(result);
