@@ -26,8 +26,8 @@ public class UniqueCharsCounter {
             return uniqueCharactersNumber;
         }
         fillCharactersNumberMap(uniqueCharactersNumber, input);
-        return uniqueCharactersNumber;
 
+        return uniqueCharactersNumber;
     }
 
     private void fillCharactersNumberMap(TCharLongMap uniqueCharactersNumber, String input) {
@@ -40,5 +40,4 @@ public class UniqueCharsCounter {
             }
         }
     }
-
 }

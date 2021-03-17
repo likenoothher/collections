@@ -21,5 +21,4 @@ public class CharactersAmountCache {
         cache.putIfAbsent(key, map);
         return map;
     }
-
 }
