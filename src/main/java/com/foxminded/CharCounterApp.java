@@ -1,35 +1,41 @@
 package com.foxminded;
 
-import java.util.Map;
+
+import gnu.trove.map.TCharLongMap;
+
+import java.util.stream.IntStream;
 
 public class CharCounterApp {
-    private static final InputCacheStorage INPUTS_CACHE_STORAGE = new InputCacheStorage();
 
     public static void main(String[] args) {
-        printSymbolAmount("edcbaa");
-        printSymbolAmount("");
-        printSymbolAmount("Hello world!");
-        printSymbolAmount("");
+        CharactersAmountCache charactersAmountCache = new CharactersAmountCache();
+        UniqueCharsCounter charCounter = new UniqueCharsCounter(charactersAmountCache);
+
+        printSymbolsAmount(charCounter.calculateCharactersNumber("1233"));
+        printSymbolsAmount(charCounter.calculateCharactersNumber(""));
+
+        printSymbolsAmount(charCounter.calculateCharactersNumber("122522"));
+
 
     }
 
-    public static void printSymbolAmount(String input) {
-        Map<Character, Long> symbolAmountResult = countSymbols(input);
-        if (symbolAmountResult.isEmpty()) {
+    public static void printSymbolsAmount(TCharLongMap result) {
+        if (result.isEmpty()) {
             System.out.println("There is no characters in the string");
-        } else {
-            for (Map.Entry<Character, Long> entry : symbolAmountResult.entrySet()) {
-                System.out.println(String.format("\"%c\" - %d", entry.getKey(), entry.getValue()));
-            }
+            System.out.println(result.getClass().getSimpleName());
+            return;
         }
+        printSortedResult(result);
+
+
     }
 
-    private static Map<Character, Long> countSymbols(String input) {
-
-        InputsCharCounter icc = new InputsCharCounter(INPUTS_CACHE_STORAGE);
-
-        icc.addInputToCounter(input);
-
-        return icc.getSymbolAmountResult();
+    private static void printSortedResult(TCharLongMap result) {
+        char[] keysOfResult = result.keys();
+        IntStream.range(0, keysOfResult.length).
+            mapToObj(i -> keysOfResult[i]).
+            sorted().
+            forEach(x -> System.out.println("\"" + x + "\"" + " - " + result.get((char) x)));
     }
+
 }
