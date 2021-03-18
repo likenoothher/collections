@@ -13,6 +13,8 @@ public class UniqueCharsCounter {
     }
 
     public TCharLongMap calculateCharactersNumber(String input) {
+        checkInput(input);
+
         if (charactersAmountCache.contains(input)) {
             return charactersAmountCache.getCachedInput(input);
         }
@@ -38,6 +40,12 @@ public class UniqueCharsCounter {
             } else {
                 uniqueCharactersNumber.put(symbol, 1);
             }
+        }
+    }
+
+    private void checkInput(String input) {
+        if (input == null) {
+            throw new IllegalArgumentException();
         }
     }
 }

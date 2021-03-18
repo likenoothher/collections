@@ -1,6 +1,5 @@
 package com.foxminded;
 
-
 import gnu.trove.map.TCharLongMap;
 
 import java.util.stream.IntStream;
@@ -11,10 +10,10 @@ public class CharCounterApp {
         CharactersAmountCache charactersAmountCache = new CharactersAmountCache();
         UniqueCharsCounter charCounter = new UniqueCharsCounter(charactersAmountCache);
 
-        printSymbolsAmount(charCounter.calculateCharactersNumber("1233"));
+        printSymbolsAmount(charCounter.calculateCharactersNumber("122522"));
         printSymbolsAmount(charCounter.calculateCharactersNumber("1233"));
         printSymbolsAmount(charCounter.calculateCharactersNumber(""));
-        printSymbolsAmount(charCounter.calculateCharactersNumber("122522"));
+        printSymbolsAmount(charCounter.calculateCharactersNumber(null));
 
 
     }
@@ -28,9 +27,8 @@ public class CharCounterApp {
     }
 
     private static void printSortedResult(TCharLongMap result) {
-        char[] keysOfResult = result.keys();
-        IntStream.range(0, keysOfResult.length).
-            mapToObj(i -> keysOfResult[i]).
+        IntStream.range(0, result.keys().length).
+            mapToObj(i -> result.keys()[i]).
             sorted().
             forEach(x -> System.out.println("\"" + x + "\"" + " - " + result.get((char) x)));
     }

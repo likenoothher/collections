@@ -9,6 +9,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 import static org.mockito.Mockito.*;
 
 
@@ -21,6 +22,12 @@ public class UniqueCharsCounterTest {
 
     @Mock
     private CharactersAmountCache cache;
+
+    @Test
+    public void whenNullInput_throwIAException() {
+        inputCharCounter = new UniqueCharsCounter(cache);
+        assertThrows(IllegalArgumentException.class, () -> inputCharCounter.calculateCharactersNumber(null));
+    }
 
     @Test
     public void whenGivenEmptyInput_thenResultMapIsEmpty() {
