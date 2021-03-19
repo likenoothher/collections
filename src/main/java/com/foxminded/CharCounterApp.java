@@ -1,35 +1,26 @@
 package com.foxminded;
 
-import gnu.trove.map.TCharLongMap;
-
-import java.util.stream.IntStream;
+import java.util.Map;
 
 public class CharCounterApp {
 
     public static void main(String[] args) {
-        CharactersAmountCache charactersAmountCache = new CharactersAmountCache();
+       GenericCounterCache charactersAmountCache = new CharactersAmountCache();
         UniqueCharsCounter charCounter = new UniqueCharsCounter(charactersAmountCache);
 
-        printSymbolsAmount(charCounter.calculateCharactersNumber("122522"));
-        printSymbolsAmount(charCounter.calculateCharactersNumber("1233"));
-        printSymbolsAmount(charCounter.calculateCharactersNumber(""));
-        printSymbolsAmount(charCounter.calculateCharactersNumber(null));
 
+        printSymbolsAmount(charCounter.calculateCharactersNumber("DDDtreyyy grh3j3 miymi; jjj"));
+        printSymbolsAmount(charCounter.calculateCharactersNumber("dtreyyy grh3j3 miymi; jjj"));
+        printSymbolsAmount(charCounter.calculateCharactersNumber(""));
 
     }
 
-    public static void printSymbolsAmount(TCharLongMap result) {
+    public static void printSymbolsAmount(Map<Character,Long> result) {
         if (result.isEmpty()) {
             System.out.println("There is no characters in the string");
             return;
         }
-        printSortedResult(result);
+        result.entrySet().stream().forEach(x -> System.out.println("\"" + x.getKey() + "\"" + " - " + x.getValue()));
     }
 
-    private static void printSortedResult(TCharLongMap result) {
-        IntStream.range(0, result.keys().length).
-            mapToObj(i -> result.keys()[i]).
-            sorted().
-            forEach(x -> System.out.println("\"" + x + "\"" + " - " + result.get((char) x)));
-    }
 }

@@ -1,44 +1,44 @@
 package com.foxminded;
 
-import gnu.trove.TCollections;
-import gnu.trove.map.TCharLongMap;
-import gnu.trove.map.hash.TCharLongHashMap;
+import java.util.Collections;
+import java.util.Map;
+import java.util.TreeMap;
 
 
 public class UniqueCharsCounter {
-    private CharactersAmountCache charactersAmountCache;
+    private GenericCounterCache<String, Map<Character, Long>> charactersAmountCache;
 
-    public UniqueCharsCounter(CharactersAmountCache charactersAmountCache) {
+    public UniqueCharsCounter(GenericCounterCache charactersAmountCache) {
         this.charactersAmountCache = charactersAmountCache;
     }
 
-    public TCharLongMap calculateCharactersNumber(String input) {
+    public Map<Character, Long> calculateCharactersNumber(String input) {
         checkInput(input);
 
         if (charactersAmountCache.contains(input)) {
-            return charactersAmountCache.getCachedInput(input);
+            return charactersAmountCache.get(input);
         }
-        TCharLongMap uniqueCharactersNumber = TCollections.unmodifiableMap(calculateNewInput(input));
-        return charactersAmountCache.putToCache(input, uniqueCharactersNumber);
+        Map<Character, Long> uniqueCharactersNumber = Collections.unmodifiableMap(calculateNewInput(input));
+        return charactersAmountCache.put(input, uniqueCharactersNumber);
     }
 
-    private TCharLongMap calculateNewInput(String input) {
-        TCharLongMap uniqueCharactersNumber = new TCharLongHashMap();
+    private Map<Character, Long> calculateNewInput(String input) {
+        Map<Character, Long> uniqueCharactersNumber = new TreeMap<>();
         if (input.equals("")) {
             return uniqueCharactersNumber;
         }
         fillCharactersNumberMap(uniqueCharactersNumber, input);
-
         return uniqueCharactersNumber;
     }
 
-    private void fillCharactersNumberMap(TCharLongMap uniqueCharactersNumber, String input) {
+    private void fillCharactersNumberMap(Map<Character, Long> uniqueCharactersNumber, String input) {
+
         char[] charArray = input.toCharArray();
         for (char symbol : charArray) {
             if (uniqueCharactersNumber.containsKey(symbol)) {
                 uniqueCharactersNumber.put(symbol, uniqueCharactersNumber.get(symbol) + 1);
             } else {
-                uniqueCharactersNumber.put(symbol, 1);
+                uniqueCharactersNumber.put(symbol, 1l);
             }
         }
     }

@@ -1,24 +1,26 @@
 package com.foxminded;
 
-import gnu.trove.map.TCharLongMap;
-
 import java.util.HashMap;
 import java.util.Map;
 
-public class CharactersAmountCache {
+public class CharactersAmountCache<K, V> implements GenericCounterCache<K, V> {
 
-    private Map<String, TCharLongMap> cache = new HashMap<String, TCharLongMap>();
+    private Map<K, V> cache = new HashMap<>();
 
-    public TCharLongMap getCachedInput(String key) {
-        return cache.get(key);
-    }
 
-    public boolean contains(String key) {
+    @Override
+    public boolean contains(K key) {
         return cache.containsKey(key);
     }
 
-    public TCharLongMap putToCache(String key, TCharLongMap map) {
-        cache.putIfAbsent(key, map);
-        return map;
+    @Override
+    public V get(K key) {
+        return cache.get(key);
+    }
+
+    @Override
+    public V put(K key, V value) {
+        cache.putIfAbsent(key, value);
+        return value;
     }
 }
