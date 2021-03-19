@@ -38,7 +38,7 @@ public class UniqueCharsCounter {
             if (uniqueCharactersNumber.containsKey(symbol)) {
                 uniqueCharactersNumber.put(symbol, uniqueCharactersNumber.get(symbol) + 1);
             } else {
-                uniqueCharactersNumber.put(symbol, 1l);
+                uniqueCharactersNumber.put(symbol, 1L);
             }
         }
     }

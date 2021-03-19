@@ -1,6 +1,6 @@
 package com.foxminded;
 
-public class CharactersAmountCacheStub<K, V> implements GenericCounterCache<K, V>{
+public class CharactersAmountCacheStub<K, V> implements GenericCounterCache<K, V> {
 
     @Override
     public boolean contains(K key) {
@@ -14,6 +14,6 @@ public class CharactersAmountCacheStub<K, V> implements GenericCounterCache<K, V
 
     @Override
     public V put(K key, V value) {
-        return null;
+        return value;
     }
 }

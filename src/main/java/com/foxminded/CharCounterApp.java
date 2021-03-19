@@ -5,7 +5,7 @@ import java.util.Map;
 public class CharCounterApp {
 
     public static void main(String[] args) {
-       GenericCounterCache charactersAmountCache = new CharactersAmountCache();
+        GenericCounterCache charactersAmountCache = new CharactersAmountCache();
         UniqueCharsCounter charCounter = new UniqueCharsCounter(charactersAmountCache);
 
 
@@ -15,7 +15,7 @@ public class CharCounterApp {
 
     }
 
-    public static void printSymbolsAmount(Map<Character,Long> result) {
+    public static void printSymbolsAmount(Map<Character, Long> result) {
         if (result.isEmpty()) {
             System.out.println("There is no characters in the string");
             return;

@@ -83,7 +83,7 @@ public class CharactersAmountCacheTest {
     }
 
     @Test
-    public void whenPutExistedSymbolsNumberMapToCache_thenWillSaveMapUnderThisKeyReturnCurrentKeysValue() {
+    public void whenPutExistedKeyValuePair_thenWillNotSaveMapUnderThisKeyReturnCurrentKeysValue() {
         GenericCounterCache<String, Map<Character, Long>> cache = new CharactersAmountCache<>();
         Map<Character, Long> mapOf11123Sequence = new HashMap<>();
         mapOf11123Sequence.put('1', 3L);
@@ -94,6 +94,7 @@ public class CharactersAmountCacheTest {
         mapOf432Sequence.put('4', 1L);
         mapOf432Sequence.put('3', 1L);
         mapOf432Sequence.put('2', 1L);
+
         cache.put("11123", mapOf11123Sequence);
         cache.put("11123", mapOf11123Sequence);
         assertEquals(mapOf432Sequence, cache.put("11123", mapOf432Sequence));
