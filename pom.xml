@@ -5,37 +5,37 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.foxminded</groupId>
-    <artifactId>char-counter-app</artifactId>
+    <artifactId>char-counter</artifactId>
     <version>1.0-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <junit.ver>4.13</junit.ver>
-        <surefire.ver>2.22.0</surefire.ver>
-        <trove4j.ver>3.0.3</trove4j.ver>
-        <mockito.ver>1.10.19</mockito.ver>
-        <editorconfig.ver>0.1.1</editorconfig.ver>
+        <junit.version>4.13</junit.version>
+        <surefire.version>2.22.0</surefire.version>
+        <trove4j.version>3.0.3</trove4j.version>
+        <mockito.version>1.10.19</mockito.version>
+        <editorconfig.version>0.1.1</editorconfig.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>${mockito.ver}</version>
+            <version>${mockito.version}</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>net.sf.trove4j</groupId>
             <artifactId>trove4j</artifactId>
-            <version>${trove4j.ver}</version>
+            <version>${trove4j.version}</version>
         </dependency>
 
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>${junit.ver}</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -45,12 +45,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>${surefire.ver}</version>
+                <version>${surefire.version}</version>
             </plugin>
             <plugin>
                 <groupId>org.ec4j.maven</groupId>
                 <artifactId>editorconfig-maven-plugin</artifactId>
-                <version>${editorconfig.ver}</version>
+                <version>${editorconfig.version}</version>
                 <executions>
                     <execution>
                         <id>check</id>

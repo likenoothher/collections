@@ -1,4 +1,6 @@
-package com.foxminded;
+package com.foxminded.charcounter.counter;
+
+import com.foxminded.charcounter.cache.GenericCounterCache;
 
 import java.util.Collections;
 import java.util.Map;
@@ -18,11 +20,11 @@ public class UniqueCharsCounter {
         if (charactersAmountCache.contains(input)) {
             return charactersAmountCache.get(input);
         }
-        Map<Character, Long> uniqueCharactersNumber = Collections.unmodifiableMap(calculateNewInput(input));
-        return charactersAmountCache.put(input, uniqueCharactersNumber);
+        Map<Character, Long> uniqueCharactersNumber = calculateNewCharactersNumber(input);
+        return charactersAmountCache.put(input, Collections.unmodifiableMap(uniqueCharactersNumber));
     }
 
-    private Map<Character, Long> calculateNewInput(String input) {
+    private Map<Character, Long> calculateNewCharactersNumber(String input) {
         Map<Character, Long> uniqueCharactersNumber = new TreeMap<>();
         if (input.equals("")) {
             return uniqueCharactersNumber;

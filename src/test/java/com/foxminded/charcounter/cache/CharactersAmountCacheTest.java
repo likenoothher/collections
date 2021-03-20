@@ -1,9 +1,12 @@
-package com.foxminded;
+package com.foxminded.charcounter.cache;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assume.assumeTrue;
 import static org.junit.Assume.assumeFalse;
 
+import com.foxminded.charcounter.cache.CharactersAmountCache;
+import com.foxminded.charcounter.cache.GenericCounterCache;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -61,7 +64,7 @@ public class CharactersAmountCacheTest {
     public void whenGettingKeyIsNotEqualsAnyExistedCache_thenReturnNull() {
         GenericCounterCache<String, Map<Character, Long>> cache = new CharactersAmountCache<>();
 
-        assertEquals(null, cache.get("not_existed_key"));
+        assertNull(cache.get("not_existed_key"));
     }
 
     @Test

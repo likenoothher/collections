@@ -1,4 +1,4 @@
-package com.foxminded;
+package com.foxminded.charcounter.cache;
 
 public class CharactersAmountCacheStub<K, V> implements GenericCounterCache<K, V> {
 

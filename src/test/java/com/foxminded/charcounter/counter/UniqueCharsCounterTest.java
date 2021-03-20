@@ -1,5 +1,7 @@
-package com.foxminded;
+package com.foxminded.charcounter.counter;
 
+import com.foxminded.charcounter.cache.CharactersAmountCacheStub;
+import com.foxminded.charcounter.cache.GenericCounterCache;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
