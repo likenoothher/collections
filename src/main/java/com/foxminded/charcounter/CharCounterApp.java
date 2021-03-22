@@ -10,14 +10,19 @@ import java.util.Map;
 public class CharCounterApp {
 
     public static void main(String[] args) {
-        GenericCounterCache charactersAmountCache = new CharactersAmountCache();
+        GenericCounterCache charactersAmountCache = new CharactersAmountCache(10);
         UniqueCharsCounter charCounter = new UniqueCharsCounter(charactersAmountCache);
 
 
-        printSymbolsAmount(charCounter.calculateCharactersNumber("DDDtreyyy grh3j3 miymi; jjj"));
-        printSymbolsAmount(charCounter.calculateCharactersNumber("dtreyyy grh3j3 miymi; jjj"));
-        printSymbolsAmount(charCounter.calculateCharactersNumber(""));
-
+        for (int i = 0; i < 10; i++) {
+            printSymbolsAmount(charCounter.calculateCharactersNumber(i +""));
+        }
+        for (int i = 2; i < 16; i++) {
+            printSymbolsAmount(charCounter.calculateCharactersNumber(i +""));
+        }
+        for (int i = 2; i < 16; i++) {
+            printSymbolsAmount(charCounter.calculateCharactersNumber(122 +""));
+        }
     }
 
     public static void printSymbolsAmount(Map<Character, Long> result) {
@@ -30,11 +35,13 @@ public class CharCounterApp {
             @Override
             public void processResult(Map<Character, Long> result) {
                 result.forEach((key, value) -> System.out.println("\"" + key + "\"" + " - " + value));
+                System.out.println("--------------------------------------------------------");
             }
         };
 
         if (formatter.isEmpty(result)) {
             System.out.println("There is no characters in the string");
+            return;
         }
 
         formatter.processResult(result);
