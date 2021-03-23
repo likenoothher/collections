@@ -4,14 +4,14 @@ import java.util.*;
 
 public class CharactersAmountCache<K, V> implements GenericCounterCache<K, V> {
 
-    private Map<K, V> cache;
-    private Map<K, Long> keyUsingFrequency;
+    private final Map<K, V> cache;
+    private final Map<K, Long> keyUsingFrequency;
     private final int capacity;
 
     public CharactersAmountCache(int capacity) {
         this.capacity = capacity;
         this.cache = new HashMap<>(capacity);
-        this.keyUsingFrequency = new HashMap<>();
+        this.keyUsingFrequency = new HashMap<>(capacity);
     }
 
     @Override
