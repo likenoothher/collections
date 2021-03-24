@@ -5,14 +5,15 @@ import java.util.*;
 public class CharactersAmountCache<K, V> implements GenericCounterCache<K, V> {
 
     private final Map<K, V> cache;
-    private final Map<K, Long> keyUsingFrequency;
+    private final TimesUsedList<K> frequencyList;
     private final int capacity;
 
     public CharactersAmountCache(int capacity) {
         this.capacity = capacity;
         this.cache = new HashMap<>(capacity);
-        this.keyUsingFrequency = new HashMap<>(capacity);
+        this.frequencyList = new TimesUsedList<>(capacity);
     }
+
 
     @Override
     public boolean contains(K key) {
@@ -24,33 +25,22 @@ public class CharactersAmountCache<K, V> implements GenericCounterCache<K, V> {
         if (!cache.containsKey(key)) {
             return null;
         }
-        long timesUsed = keyUsingFrequency.get(key);
-        keyUsingFrequency.put(key, timesUsed + 1);
+        frequencyList.used(key);
         return cache.get(key);
     }
 
     @Override
     public V put(K key, V value) {
         if (cache.size() >= capacity) {
-            Long minNumbersUses = Collections.min(keyUsingFrequency.values());
-            List<K> mostUnusedCachesKeys = getKeysFromValue(keyUsingFrequency, minNumbersUses);
-
-            cache.remove(mostUnusedCachesKeys.get(0));
-            keyUsingFrequency.remove(mostUnusedCachesKeys.get(0));
+            K leastUsedKey = frequencyList.getLeastUsed();
+            frequencyList.removeLeastUsed();
+            cache.remove(leastUsedKey);
         }
+
         cache.putIfAbsent(key, value);
-        keyUsingFrequency.put(key, 0L);
+        frequencyList.add(key);
 
         return value;
     }
 
-    private List<K> getKeysFromValue(Map<K, Long> map, Long value) {
-        List<K> list = new ArrayList<K>();
-        for (K o : map.keySet()) {
-            if (map.get(o).equals(value)) {
-                list.add(o);
-            }
-        }
-        return list;
-    }
 }
