@@ -14,7 +14,6 @@ public class CharactersAmountCache<K, V> implements GenericCounterCache<K, V> {
         this.frequencyList = new TimesUsedList<>(capacity);
     }
 
-
     @Override
     public boolean contains(K key) {
         return cache.containsKey(key);

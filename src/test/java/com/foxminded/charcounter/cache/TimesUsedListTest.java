@@ -16,7 +16,19 @@ public class TimesUsedListTest {
     }
 
     @Test
-    public void whenAddXKeys_thenKeysTimesUsedIsZero() {
+    public void whenAddExistedKey_thenKeyStandsWithPreviousValue() {
+        timesUsedList = new TimesUsedList<>(5);
+        timesUsedList.add("key");
+        timesUsedList.used("key");
+        timesUsedList.used("key");
+
+        timesUsedList.add("key");
+        long expectedTimeOfUse = timesUsedList.getFrequencyList().get(0);
+        assertEquals(expectedTimeOfUse, 2L);
+    }
+
+    @Test
+    public void whenAddSeveralDiffKeys_thenKeysTimesUsedIsZeroPerEach() {
         timesUsedList = new TimesUsedList<>(5);
         timesUsedList.add("key1");
         timesUsedList.add("key2");
@@ -30,7 +42,7 @@ public class TimesUsedListTest {
     }
 
     @Test
-    public void whenAddKeyAndUsedXTimes_thenKeysTimesUsedIsS() {
+    public void whenAddKeyAndUsedXTimes_thenKeysTimesUsedIsX() {
         timesUsedList = new TimesUsedList<>(5);
         timesUsedList.add("key");
         timesUsedList.used("key");
@@ -41,7 +53,7 @@ public class TimesUsedListTest {
     }
 
     @Test
-    public void whenAddXKeysAndUsedXTimes_thenKeysTimesUsedIsS() {
+    public void whenAddXKeysAndUsedXTimes_thenKeysTimesUsedIsX() {
         timesUsedList = new TimesUsedList<>(5);
         timesUsedList.add("key1");
         timesUsedList.used("key1");
@@ -111,5 +123,4 @@ public class TimesUsedListTest {
         assertEquals(4, (long) timesUsedList.getFrequencyList().get(indexOfKey3));
 
     }
-
 }
