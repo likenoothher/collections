@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class TimesUsedList<K> {
-    private List<K> keysList;
-    private List<Long> frequencyList;
+public class KeyUseFrequencyList<K> {
+    private final List<K> keysList;
+    private final List<Long> frequencyList;
 
-    public TimesUsedList(int capacity) {
+    public KeyUseFrequencyList(int capacity) {
         this.keysList = new ArrayList<>(capacity);
         this.frequencyList = new ArrayList<>(capacity);
     }
