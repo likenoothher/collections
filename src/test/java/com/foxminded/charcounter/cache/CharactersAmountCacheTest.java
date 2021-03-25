@@ -1,23 +1,22 @@
 package com.foxminded.charcounter.cache;
 
-import static org.junit.Assert.*;
-import static org.junit.Assume.assumeTrue;
-import static org.junit.Assume.assumeFalse;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
-
 import java.util.HashMap;
 import java.util.Map;
+
+import static org.junit.Assert.*;
+import static org.junit.Assume.assumeFalse;
+import static org.junit.Assume.assumeTrue;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CharactersAmountCacheTest {
 
     @Test
     public void whenCacheContainsString_thenReturnTrue() {
-        GenericCounterCache<String, Map<Character, Long>> cache = new CharactersAmountCache<>(2);
+        GenericCounterCache<String, Map<Character, Long>> cache = new CharactersAmountCache(2);
         Map<Character, Long> mapOf11123Sequence = new HashMap<>();
         mapOf11123Sequence.put('1', 3L);
         mapOf11123Sequence.put('2', 1L);
@@ -29,7 +28,7 @@ public class CharactersAmountCacheTest {
 
     @Test
     public void whenCacheDoesNotContainsString_thenReturnFalse() {
-        GenericCounterCache<String, Map<Character, Long>> cache = new CharactersAmountCache<>(2);
+        GenericCounterCache<String, Map<Character, Long>> cache = new CharactersAmountCache(2);
         Map<Character, Long> mapOf11123Sequence = new HashMap<>();
         mapOf11123Sequence.put('1', 3L);
         mapOf11123Sequence.put('2', 1L);
@@ -41,7 +40,7 @@ public class CharactersAmountCacheTest {
 
     @Test
     public void whenGettingKeyEqualsExistedCache_thenReturnSymbolsNumberMap() {
-        GenericCounterCache<String, Map<Character, Long>> cache = new CharactersAmountCache<>(2);
+        GenericCounterCache<String, Map<Character, Long>> cache = new CharactersAmountCache(2);
         Map<Character, Long> mapOf11123Sequence = new HashMap<>();
         mapOf11123Sequence.put('1', 3L);
         mapOf11123Sequence.put('2', 1L);
@@ -59,14 +58,14 @@ public class CharactersAmountCacheTest {
 
     @Test
     public void whenGettingKeyIsNotEqualsAnyExistedCache_thenReturnNull() {
-        GenericCounterCache<String, Map<Character, Long>> cache = new CharactersAmountCache<>(2);
+        GenericCounterCache<String, Map<Character, Long>> cache = new CharactersAmountCache(2);
 
         assertNull(cache.get("not_existed_key"));
     }
 
     @Test
     public void whenPutNewSymbolsNumberMapToCache_thenSaveMapAndReturnIt() {
-        GenericCounterCache<String, Map<Character, Long>> cache = new CharactersAmountCache<>(2);
+        GenericCounterCache<String, Map<Character, Long>> cache = new CharactersAmountCache(2);
         Map<Character, Long> mapOf11123Sequence = new HashMap<>();
         mapOf11123Sequence.put('1', 3L);
         mapOf11123Sequence.put('2', 1L);
@@ -84,7 +83,7 @@ public class CharactersAmountCacheTest {
 
     @Test
     public void whenPutExistedKeyValuePair_thenWillNotSaveMapUnderThisKeyReturnCurrentKeysValue() {
-        GenericCounterCache<String, Map<Character, Long>> cache = new CharactersAmountCache<>(2);
+        GenericCounterCache<String, Map<Character, Long>> cache = new CharactersAmountCache(2);
         Map<Character, Long> mapOf11123Sequence = new HashMap<>();
         mapOf11123Sequence.put('1', 3L);
         mapOf11123Sequence.put('2', 1L);
@@ -104,7 +103,7 @@ public class CharactersAmountCacheTest {
 
     @Test
     public void whenPutSymbolsNumberMapOverCapacity_thenRemoveRandomMapWithMinNumberOfUsing() {
-        GenericCounterCache<String, Map<Character, Long>> cache = new CharactersAmountCache<>(2);
+        GenericCounterCache<String, Map<Character, Long>> cache = new CharactersAmountCache(2);
         Map<Character, Long> mapOf11123Sequence = new HashMap<>();
 
         Map<Character, Long> mapOf432Sequence = new HashMap<>();

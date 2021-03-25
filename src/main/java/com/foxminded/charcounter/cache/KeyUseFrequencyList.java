@@ -13,14 +13,6 @@ public class KeyUseFrequencyList<K> {
         this.frequencyList = new ArrayList<>(capacity);
     }
 
-    public List<K> getKeysList() {
-        return Collections.unmodifiableList(keysList);
-    }
-
-    public List<Long> getFrequencyList() {
-        return Collections.unmodifiableList(frequencyList);
-    }
-
     public void add(K key) {
         if (!keysList.contains(key)) {
             keysList.add(key);
@@ -32,19 +24,16 @@ public class KeyUseFrequencyList<K> {
         if (keysList.contains(key)) {
             int index = keysList.indexOf(key);
             Long timesUsed = frequencyList.get(index);
-            frequencyList.remove(index);
-            frequencyList.add(index, timesUsed + 1);
+            frequencyList.set(index, timesUsed + 1);
         }
     }
 
-    public K getLeastUsed() {
+    public K removeLeastUsed() {
         int index = frequencyList.indexOf(Collections.min(frequencyList));
-        return keysList.get(index);
-    }
-
-    public void removeLeastUsed() {
-        int index = frequencyList.indexOf(Collections.min(frequencyList));
+        K removedKey = keysList.get(index);
         keysList.remove(index);
         frequencyList.remove(index);
+        return removedKey;
     }
+
 }

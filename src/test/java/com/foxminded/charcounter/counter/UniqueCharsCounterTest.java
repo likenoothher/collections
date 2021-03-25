@@ -3,8 +3,6 @@ package com.foxminded.charcounter.counter;
 import com.foxminded.charcounter.cache.CharactersAmountCacheStub;
 import com.foxminded.charcounter.cache.GenericCounterCache;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -13,7 +11,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
 
-@RunWith(MockitoJUnitRunner.class)
 public class UniqueCharsCounterTest {
 
     private Map<Character, Long> mapWithExpectedValues;

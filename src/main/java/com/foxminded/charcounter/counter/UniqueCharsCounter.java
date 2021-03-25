@@ -8,9 +8,9 @@ import java.util.TreeMap;
 
 
 public class UniqueCharsCounter {
-    private GenericCounterCache<String, Map<Character, Long>> charactersAmountCache;
+    private final GenericCounterCache<String, Map<Character, Long>> charactersAmountCache;
 
-    public UniqueCharsCounter(GenericCounterCache charactersAmountCache) {
+    public UniqueCharsCounter(GenericCounterCache<String, Map<Character, Long>> charactersAmountCache) {
         this.charactersAmountCache = charactersAmountCache;
     }
 
@@ -34,14 +34,10 @@ public class UniqueCharsCounter {
     }
 
     private void fillCharactersNumberMap(Map<Character, Long> uniqueCharactersNumber, String input) {
-
         char[] charArray = input.toCharArray();
+
         for (char symbol : charArray) {
-            if (uniqueCharactersNumber.containsKey(symbol)) {
-                uniqueCharactersNumber.put(symbol, uniqueCharactersNumber.get(symbol) + 1);
-            } else {
-                uniqueCharactersNumber.put(symbol, 1L);
-            }
+            uniqueCharactersNumber.merge(symbol, 1L, Long::sum);
         }
     }
 

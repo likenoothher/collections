@@ -1,11 +1,12 @@
 package com.foxminded.charcounter.cache;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
-public class CharactersAmountCache<K, V> implements GenericCounterCache<K, V> {
+public class CharactersAmountCache implements GenericCounterCache<String, Map<Character, Long>> {
 
-    private final Map<K, V> cache;
-    private final KeyUseFrequencyList<K> frequencyList;
+    private final Map<String, Map<Character, Long>> cache;
+    private final KeyUseFrequencyList<String> frequencyList;
     private final int capacity;
 
     public CharactersAmountCache(int capacity) {
@@ -15,12 +16,12 @@ public class CharactersAmountCache<K, V> implements GenericCounterCache<K, V> {
     }
 
     @Override
-    public boolean contains(K key) {
+    public boolean contains(String key) {
         return cache.containsKey(key);
     }
 
     @Override
-    public V get(K key) {
+    public Map<Character, Long> get(String key) {
         if (!cache.containsKey(key)) {
             return null;
         }
@@ -29,10 +30,9 @@ public class CharactersAmountCache<K, V> implements GenericCounterCache<K, V> {
     }
 
     @Override
-    public V put(K key, V value) {
+    public Map<Character, Long> put(String key, Map<Character, Long> value) {
         if (cache.size() >= capacity) {
-            K leastUsedKey = frequencyList.getLeastUsed();
-            frequencyList.removeLeastUsed();
+            String leastUsedKey = frequencyList.removeLeastUsed();
             cache.remove(leastUsedKey);
         }
         cache.putIfAbsent(key, value);
