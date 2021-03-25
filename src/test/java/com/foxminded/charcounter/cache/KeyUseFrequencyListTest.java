@@ -51,7 +51,7 @@ public class KeyUseFrequencyListTest {
 
         String leastUsedKey = keyUseFrequencyList.removeLeastUsed();
 
-        assertTrue("key2".equals(leastUsedKey));
+        assertEquals("key2", leastUsedKey);
 
     }
 }
