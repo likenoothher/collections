@@ -7,14 +7,19 @@ import java.util.List;
 public class KeyUseFrequencyList<K> {
     private final List<K> keysList;
     private final List<Long> frequencyList;
+    private final int capacity;
 
     public KeyUseFrequencyList(int capacity) {
+        this.capacity = capacity;
         this.keysList = new ArrayList<>(capacity);
         this.frequencyList = new ArrayList<>(capacity);
     }
 
     public void add(K key) {
         if (!keysList.contains(key)) {
+            if (keysList.size() >= capacity) {
+                removeLeastUsed();
+            }
             keysList.add(key);
             frequencyList.add(0L);
         }

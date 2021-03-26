@@ -38,7 +38,7 @@ public class CharactersAmountCache implements GenericCounterCache<String, Map<Ch
         cache.putIfAbsent(key, value);
         frequencyList.add(key);
 
-        return value;
+        return cache.get(key);
     }
 
 }
